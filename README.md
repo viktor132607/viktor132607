@@ -54,8 +54,7 @@ I focus on building dynamic and scalable web applications using **ASP.NET Core**
 
 ### 🔵 C# DB  
 - [MS SQL – January 2025](https://softuni.bg/Certificates/Details/241650/4935c3eb)  
-*(Entity Framework Core – coming soon 🚀)*  
-
+- Entity Framework Core - 
 ### 🟢 C# Web  
 - [ASP.NET Fundamentals – May 2025](https://softuni.bg/Certificates/Details/249703/cec828da)  
 - [ASP.NET Advanced – June 2025](https://softuni.bg/Certificates/Details/249207/e8011257)  
