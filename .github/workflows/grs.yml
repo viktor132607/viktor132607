@@ -67,6 +67,12 @@ jobs:
             return repos.filter((repo) => !repo.fork && !repo.archived);
           }
 
+          function readGeneratedCommitCount() {
+            const svg = fs.readFileSync("profile/stats.svg", "utf8");
+            const match = svg.match(/data-testid="commits"[\s\S]*?>([\d,]+)<\/text>/);
+            return match ? Number(match[1].replace(/,/g, "")) : null;
+          }
+
           async function main() {
             const repos = await getRepos();
             const languageTotals = new Map();
@@ -91,11 +97,17 @@ jobs:
               .sort((a, b) => b.percent - a.percent)
               .slice(0, 5);
 
-            const commitSearch = await github(`/search/commits?q=${encodeURIComponent(`author:${username}`)}&per_page=1`);
+            let totalCommits = readGeneratedCommitCount();
+
+            if (totalCommits === null) {
+              const commitSearch = await github(`/search/commits?q=${encodeURIComponent(`author:${username}`)}&per_page=1`);
+              totalCommits = commitSearch.total_count;
+            }
 
             const data = {
               repos: repos.length,
-              totalCommits: commitSearch.total_count,
+              totalCommits,
+              commitPeriod: "lastYear",
               languages,
               updatedAt: new Date().toISOString()
             };
