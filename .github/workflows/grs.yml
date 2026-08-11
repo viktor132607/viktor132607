@@ -22,7 +22,7 @@ jobs:
         uses: stats-organization/github-readme-stats-action@v2
         with:
           card: stats
-          options: username=viktor132607&show_icons=true&theme=default&bg_color=ffffff&hide_border=true
+          options: username=viktor132607&show_icons=true&theme=default&bg_color=ffffff&hide_border=true&include_all_commits=true&number_format=long
           path: profile/stats.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -70,7 +70,12 @@ jobs:
           function readGeneratedCommitCount() {
             const svg = fs.readFileSync("profile/stats.svg", "utf8");
             const match = svg.match(/data-testid="commits"[\s\S]*?>([\d,]+)<\/text>/);
-            return match ? Number(match[1].replace(/,/g, "")) : null;
+
+            if (!match) {
+              throw new Error("Could not read all-time commit count from generated stats card.");
+            }
+
+            return Number(match[1].replace(/,/g, ""));
           }
 
           async function main() {
@@ -97,17 +102,10 @@ jobs:
               .sort((a, b) => b.percent - a.percent)
               .slice(0, 5);
 
-            let totalCommits = readGeneratedCommitCount();
-
-            if (totalCommits === null) {
-              const commitSearch = await github(`/search/commits?q=${encodeURIComponent(`author:${username}`)}&per_page=1`);
-              totalCommits = commitSearch.total_count;
-            }
-
             const data = {
               repos: repos.length,
-              totalCommits,
-              commitPeriod: "lastYear",
+              totalCommits: readGeneratedCommitCount(),
+              commitPeriod: "allTime",
               languages,
               updatedAt: new Date().toISOString()
             };
