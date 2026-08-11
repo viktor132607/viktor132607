@@ -1,6 +1,9 @@
 name: Update GitHub Stats
 
 on:
+  push:
+    paths:
+      - ".github/workflows/grs.yml"
   schedule:
     - cron: "0 3 * * *"
   workflow_dispatch:
