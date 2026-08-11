@@ -89,7 +89,7 @@ jobs:
             return repos.filter((repo) => !repo.fork && !repo.archived);
           }
 
-          async function getAllTimeCommitCount() {
+          async function getAllTimeContributionCount() {
             const yearsData = await githubGraphQL(
               `query($login: String!) {
                 user(login: $login) {
@@ -103,6 +103,7 @@ jobs:
 
             const years = yearsData.user.contributionsCollection.contributionYears;
             let total = 0;
+            const byYear = {};
             const now = new Date();
 
             for (const year of years) {
@@ -115,30 +116,34 @@ jobs:
                 `query($login: String!, $from: DateTime!, $to: DateTime!) {
                   user(login: $login) {
                     contributionsCollection(from: $from, to: $to) {
-                      totalCommitContributions
+                      contributionCalendar {
+                        totalContributions
+                      }
                     }
                   }
                 }`,
                 { login: username, from, to }
               );
 
-              total += yearData.user.contributionsCollection.totalCommitContributions;
+              const yearTotal = yearData.user.contributionsCollection.contributionCalendar.totalContributions;
+              byYear[year] = yearTotal;
+              total += yearTotal;
             }
 
-            return total;
+            return { total, byYear };
           }
 
-          function patchStatsCard(totalCommits) {
-            const formatted = totalCommits.toLocaleString("en-US");
+          function patchStatsCard(totalContributions) {
+            const formatted = totalContributions.toLocaleString("en-US");
             let svg = fs.readFileSync("profile/stats.svg", "utf8");
 
             svg = svg.replace(
               /Total Commits\s*(?:\([^)]*\))?\s*:/g,
-              "Total Commits (all time):"
+              "Total Contributions (all time):"
             );
 
             svg = svg.replace(
-              /(Total Commits \(all time\):)\s*[\d,]+(?=,\s*Total PRs)/g,
+              /(Total Contributions \(all time\):)\s*[\d,]+(?=,\s*Total PRs)/g,
               `$1 ${formatted}`
             );
 
@@ -151,9 +156,9 @@ jobs:
           }
 
           async function main() {
-            const [repos, totalCommits] = await Promise.all([
+            const [repos, contributionStats] = await Promise.all([
               getRepos(),
-              getAllTimeCommitCount()
+              getAllTimeContributionCount()
             ]);
 
             const languageTotals = new Map();
@@ -177,12 +182,13 @@ jobs:
               .sort((a, b) => b.percent - a.percent)
               .slice(0, 5);
 
-            patchStatsCard(totalCommits);
+            patchStatsCard(contributionStats.total);
 
             const data = {
               repos: repos.length,
-              totalCommits,
-              commitPeriod: "allTime",
+              totalContributions: contributionStats.total,
+              contributionsByYear: contributionStats.byYear,
+              contributionPeriod: "allTime",
               languages,
               updatedAt: new Date().toISOString()
             };
