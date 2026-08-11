@@ -30,12 +30,12 @@ I focus on building dynamic and scalable web applications using **ASP.NET Core**
 
 ---
 
-## 📊 GitHub Stats  
+## 📊 GitHub Stats
 
 <p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=viktor132607&show_icons=true&theme=default&bg_color=ffffff&hide_border=true" height="165"/>
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=viktor132607&layout=compact&theme=default&bg_color=ffffff&hide_border=true" height="165"/>
-</p>  
+  <img src="./profile/stats.svg" height="165"/>
+  <img src="./profile/top-langs.svg" height="165"/>
+</p>
 
 ---
 
@@ -62,7 +62,7 @@ I focus on building dynamic and scalable web applications using **ASP.NET Core**
 - [C# OOP – February 2025](https://softuni.bg/Certificates/Details/241949/90010164)  
 
 ### 🔵 C# DB  
-- [MS SQL – January 2025](https://softuni.bg/Certificates/Details/241650/4935c3eb)  
+- [MS SQL – January 2025](https://softuni.bg/Certificates/Details/241650/4935eb)  
 - [Entity Framework Core - October 2025](https://softuni.bg/certificates/details/255097/84846a53)
 
 ### 🟢 C# Web  
