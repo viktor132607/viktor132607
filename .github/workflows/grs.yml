@@ -34,10 +34,85 @@ jobs:
           path: profile/top-langs.svg
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Commit SVG files
+      - name: Generate portfolio GitHub data
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p profile
+          node <<'NODE'
+          const fs = require("fs");
+
+          const username = "viktor132607";
+          const headers = {
+            Accept: "application/vnd.github+json",
+            Authorization: `Bearer ${process.env.GH_TOKEN}`,
+            "X-GitHub-Api-Version": "2022-11-28"
+          };
+
+          async function github(path) {
+            const response = await fetch(`https://api.github.com${path}`, { headers });
+            if (!response.ok) {
+              throw new Error(`GitHub API ${response.status}: ${path}`);
+            }
+            return response.json();
+          }
+
+          async function getRepos() {
+            const repos = [];
+            for (let page = 1; ; page += 1) {
+              const batch = await github(`/users/${username}/repos?per_page=100&page=${page}&sort=updated&type=owner`);
+              repos.push(...batch);
+              if (batch.length < 100) break;
+            }
+            return repos.filter((repo) => !repo.fork && !repo.archived);
+          }
+
+          async function main() {
+            const repos = await getRepos();
+            const languageTotals = new Map();
+
+            const languageResults = await Promise.all(
+              repos.map((repo) => github(`/repos/${username}/${repo.name}/languages`).catch(() => ({})))
+            );
+
+            for (const languages of languageResults) {
+              for (const [name, bytes] of Object.entries(languages)) {
+                languageTotals.set(name, (languageTotals.get(name) ?? 0) + Number(bytes));
+              }
+            }
+
+            const totalBytes = [...languageTotals.values()].reduce((sum, bytes) => sum + bytes, 0);
+            const languages = [...languageTotals.entries()]
+              .map(([name, bytes]) => ({
+                name,
+                percent: totalBytes > 0 ? Math.round((bytes / totalBytes) * 100) : 0
+              }))
+              .filter((language) => language.percent > 0)
+              .sort((a, b) => b.percent - a.percent)
+              .slice(0, 5);
+
+            const commitSearch = await github(`/search/commits?q=${encodeURIComponent(`author:${username}`)}&per_page=1`);
+
+            const data = {
+              repos: repos.length,
+              totalCommits: commitSearch.total_count,
+              languages,
+              updatedAt: new Date().toISOString()
+            };
+
+            fs.writeFileSync("profile/github-stats.json", `${JSON.stringify(data, null, 2)}\n`);
+          }
+
+          main().catch((error) => {
+            console.error(error);
+            process.exit(1);
+          });
+          NODE
+
+      - name: Commit generated stats
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add profile/*.svg
+          git add profile/stats.svg profile/top-langs.svg profile/github-stats.json
           git commit -m "Update GitHub stats" || exit 0
           git push
