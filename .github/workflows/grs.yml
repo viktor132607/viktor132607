@@ -138,7 +138,7 @@ jobs:
             );
 
             svg = svg.replace(
-              /(Total Commits \(all time\):)\s*[\d,]+/g,
+              /(Total Commits \(all time\):)\s*[\d,]+(?=,\s*Total PRs)/g,
               `$1 ${formatted}`
             );
 
