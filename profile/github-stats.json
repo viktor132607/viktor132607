@@ -1,0 +1,27 @@
+{
+  "repos": 16,
+  "totalCommits": 921,
+  "languages": [
+    {
+      "name": "C#",
+      "percent": 39
+    },
+    {
+      "name": "TypeScript",
+      "percent": 27
+    },
+    {
+      "name": "HTML",
+      "percent": 17
+    },
+    {
+      "name": "JavaScript",
+      "percent": 11
+    },
+    {
+      "name": "CSS",
+      "percent": 6
+    }
+  ],
+  "updatedAt": "2026-08-11T07:01:16.005Z"
+}
