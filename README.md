@@ -40,11 +40,8 @@ I focus on building dynamic and scalable web applications using **ASP.NET Core**
 ---
 
 ## 🎓 Education  
-- 📘 **Software University (SoftUni)** – Web Development with C# (2024 – Present)  
-  - Currently studying: **DevOps for Developers (2025)**  
-    - Software Engineering and DevOps  
-    - Containers and Cloud  
-- 🎓 **University of Economics – Varna** – Master’s in Accounting and Control (2023 – Present)  
+- 📘 **Software University (SoftUni)** – Web Development with C# (2024 – 2025)  
+- 🎓 **University of Economics – Varna** – Master’s in Accounting and Control (2023 – 2026)  
 - 🎓 **University of Economics – Varna** – Bachelor’s in Accounting and Audit (2019 – 2023)  
 - 🏫 **Vocational High School of Economics and Management – Ruse** – Professional degree in Operational Accounting (2014 – 2019)  
 
