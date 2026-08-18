@@ -1,36 +1,36 @@
 {
-  "repos": 16,
-  "totalContributions": 1151,
+  "repos": 22,
+  "totalContributions": 1186,
   "contributionsByYear": {
     "2021": 1,
     "2022": 0,
     "2023": 3,
     "2024": 8,
     "2025": 80,
-    "2026": 1059
+    "2026": 1094
   },
   "contributionPeriod": "allTime",
   "languages": [
     {
-      "name": "C#",
-      "percent": 39
+      "name": "TypeScript",
+      "percent": 38
     },
     {
-      "name": "TypeScript",
-      "percent": 27
+      "name": "C#",
+      "percent": 37
     },
     {
       "name": "HTML",
-      "percent": 17
-    },
-    {
-      "name": "JavaScript",
       "percent": 11
     },
     {
       "name": "CSS",
+      "percent": 8
+    },
+    {
+      "name": "JavaScript",
       "percent": 7
     }
   ],
-  "updatedAt": "2026-08-18T03:37:30.809Z"
+  "updatedAt": "2026-08-18T22:06:36.793Z"
 }
