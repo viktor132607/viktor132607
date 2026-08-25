@@ -5,7 +5,8 @@ on:
     paths:
       - ".github/workflows/grs.yml"
   schedule:
-    - cron: "0 3 * * *"
+    # 02:30 Europe/Sofia in summer, 01:30 in winter — always before 03:00 local time.
+    - cron: "30 23 * * *"
   workflow_dispatch:
 
 permissions:
