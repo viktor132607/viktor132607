@@ -1,40 +1,40 @@
 {
-  "repos": 26,
-  "totalContributions": 3968,
+  "repos": 28,
+  "totalContributions": 3977,
   "contributionsByYear": {
     "2021": 1,
     "2022": 0,
     "2023": 3,
     "2024": 8,
     "2025": 80,
-    "2026": 3876
+    "2026": 3885
   },
   "contributionPeriod": "allTime",
   "languages": [
     {
       "name": "C#",
-      "percent": 56.94
+      "percent": 57.51
     },
     {
       "name": "TypeScript",
-      "percent": 28.82
+      "percent": 28.83
     },
     {
       "name": "HTML",
-      "percent": 5.74
+      "percent": 5.45
     },
     {
       "name": "JavaScript",
-      "percent": 4.68
+      "percent": 4.51
     },
     {
       "name": "CSS",
-      "percent": 3.65
+      "percent": 3.52
     },
     {
       "name": "Dockerfile",
-      "percent": 0.09
+      "percent": 0.1
     }
   ],
-  "updatedAt": "2026-11-03T10:10:22.513Z"
+  "updatedAt": "2026-11-04T09:59:51.335Z"
 }
